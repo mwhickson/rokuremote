@@ -277,6 +277,63 @@
             }
 
             const roku = new RokuController();
+            
+            window.addEventListener("keyup", function (e) {
+                    switch (e.code) {
+                        case "Home":
+                            roku.sendMessage(RokuController.Command.home);
+                            break;
+
+                        case "Backspace":
+                            roku.sendMessage(RokuController.Command.back);
+                            break;
+
+                        case "ArrowDown":
+                            roku.sendMessage(RokuController.Command.down);
+                            break;
+
+                        case "ArrowUp":
+                            roku.sendMessage(RokuController.Command.up);
+                            break;
+
+                        case "ArrowLeft":
+                            roku.sendMessage(RokuController.Command.left);
+                            break;
+
+                        case "ArrowRight":
+                            roku.sendMessage(RokuController.Command.right);
+                            break;
+
+                        case "Enter":
+                            roku.sendMessage(RokuController.Command.select);
+                            break;
+
+                        case "Space":
+                            roku.sendMessage(RokuController.Command.play);
+                            break;                        
+
+                        case "KeyI":
+                            roku.sendMessage(RokuController.Command.info);
+                            break;                        
+
+                        case "KeyR":
+                            roku.sendMessage(RokuController.Command.instantreplay);
+                            break;                        
+
+                        case "KeyB":
+                            roku.sendMessage(RokuController.Command.rev);
+                            break;                        
+
+                        case "KeyF":
+                            roku.sendMessage(RokuController.Command.fwd);
+                            break;                        
+
+                        default:
+                            // PASS: 
+                            break;
+                    }
+                }
+        );
 
         </script>
 
