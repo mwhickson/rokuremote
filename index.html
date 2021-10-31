@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Roku Web Remote</title>
+
+        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <style>
+        #controls {
+            margin-top: 30px;
+        }
+
+        #controls .pure-u-1-3 {
+            text-align: center;
+        }
+
+        #controls button {
+            margin: 3px 0;
+        }
+
+        #controls hr {
+            background: #ccc;
+            border: 0;
+            color: #ccc;
+            height: 1px;
+            margin: 3px 0;
+            width: 100%;
+        }
+        </style>
+    </head>
+    <body>
+
+        <div class="pure-g">
+            <div class="pure-u-1-3"><!-- spacer --></div>
+            <div class="pure-u-1-3 pure-form">
+
+                <h1 style="text-align: center;">Roku Web Remote</h1>
+
+                <p>
+                    <label for="RokuIpAddress">Roku IP Address (and port):</label>
+                    <input type="text" id="RokuIpAddress" class="pure-input-rounded" placeholder="192.168.0.100:8060">
+
+                    <button class="pure-button pure-button-primary button-xsmall" style="float: right;" onclick="roku.saveConfiguration()">
+                        <i class="fa fa-save"></i> save
+                    </button>
+                </p>
+    
+                <div id="controls" class="pure-g">
+                    <div class="pure-u-1-3"><!-- spacer --></div>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonPowerOff" title="Power" class="button-error pure-button" style="background: #990000; color: #fff;" onclick="roku.sendMessage(RokuController.Command.poweroff)">
+                            <i class="fa fa-power-off"></i>
+                        </button>
+                    </div>
+
+                    <div class="pure-u-1-3"><!-- spacer --></div>
+
+                    <hr>
+
+                    <div class="pure-u-1-3"><!-- spacer --></div>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonBack" title="Back" class="pure-button" onclick="roku.sendMessage(RokuController.Command.back)">
+                            <i class="fa fa-undo"></i>
+                        </button>
+                    </div>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonHome" title="Home" class="pure-button" style="background: #000099; color: #fff;" onclick="roku.sendMessage(RokuController.Command.home)">
+                            <i class="fa fa-home"></i>
+                        </button>
+                    </div>
+
+                    <hr>
+
+                    <div class="pure-u-1-3"><!-- spacer --></div>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonUp" title="Up" class="pure-button" onclick="roku.sendMessage(RokuController.Command.up)">
+                            <i class="fa fa-arrow-circle-up"></i>
+                        </button>
+                    </div>
+
+                    <div class="pure-u-1-3"><!-- spacer --></div>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonLeft" title="Left" class="pure-button" onclick="roku.sendMessage(RokuController.Command.left)">
+                            <i class="fa fa-arrow-circle-left"></i>
+                        </button>
+                    </div>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonSelect" title="Select" class="pure-button" style="background: #009900; color: #fff;" onclick="roku.sendMessage(RokuController.Command.select)">
+                            <i class="fa fa-check-circle"></i>
+                        </button>
+                    </div>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonRight" title="Right" class="pure-button" onclick="roku.sendMessage(RokuController.Command.right)">
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="pure-u-1-3"><!-- spacer --></div>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonDown" title="Down" class="pure-button" onclick="roku.sendMessage(RokuController.Command.down)">
+                            <i class="fa fa-arrow-circle-down"></i>
+                        </button>
+                    </div>
+
+                    <div class="pure-u-1-3"><!-- spacer --></div>
+
+                    <hr>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonInstantReplay" title="Replay" class="pure-button" onclick="roku.sendMessage(RokuController.Command.instantreplay)">
+                            <i class="fa fa-reply"></i>
+                        </button>
+                    </div>
+
+                    <div class="pure-u-1-3"><!-- spacer --></div>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonInfo" title="Info" class="pure-button" onclick="roku.sendMessage(RokuController.Command.info)">
+                            <i class="fa fa-info-circle"></i>
+                        </button>
+                    </div>
+
+                    <hr>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonRev" title="Reverse" class="pure-button" onclick="roku.sendMessage(RokuController.Command.rev)">
+                            <i class="fa fa-backward"></i>
+                        </button>
+                    </div>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonPlay" title="Play/Pause" class="pure-button" onclick="roku.sendMessage(RokuController.Command.play)">
+                            <i class="fa fa-play"></i>
+                        </button>
+                    </div>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonFwd" title="Forward" class="pure-button" onclick="roku.sendMessage(RokuController.Command.fwd)">
+                            <i class="fa fa-forward"></i>
+                        </button>
+                    </div>
+
+                    <hr>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonMute" title="Mute" class="pure-button" onclick="roku.sendMessage(RokuController.Command.mute)">
+                            <i class="fa fa-volume-mute"></i>
+                        </button>
+                    </div>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonVolumeDown" title="Volume Down" class="pure-button" onclick="roku.sendMessage(RokuController.Command.volumedown)">
+                            <i class="fa fa-volume-down"></i>
+                        </button>
+                    </div>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonVolumeUp" title="Volume Up" class="pure-button" onclick="roku.sendMessage(RokuController.Command.volumeup)">
+                            <i class="fa fa-volume-up"></i>
+                        </button>
+                    </div>
+
+                    <hr>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonBackspace" title="Backspace" class="pure-button" onclick="roku.sendMessage(RokuController.Command.backspace)">
+                            <i class="fa fa-backspace"></i>
+                        </button>
+                    </div>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonSearch" title="Search" class="pure-button" onclick="roku.sendMessage(RokuController.Command.search)">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <div class="pure-u-1-3">
+                        <button id="buttonEnter" title="Enter" class="pure-button" onclick="roku.sendMessage(RokuController.Command.enter)">
+                            <i class="fa fa-keyboard"></i>
+                        </button>
+                    </div>
+
+                </div>
+    
+            </div>
+            <div class="pure-u-1-3"><!-- spacer --></div>
+        </div>
+
+        <script>
+
+            const RokuIpAddress = document.getElementById("RokuIpAddress");
+
+            class RokuController {
+
+                static Command = {
+                    home: "/keypress/home",
+                    up: "/keypress/up",
+                    down: "/keypress/down",
+                    left: "/keypress/left",
+                    right: "/keypress/right",
+                    select: "/keypress/select",
+                    back: "/keypress/back",
+                    info: "/keypress/info",
+                    poweroff: "/keypress/poweroff",
+                    volumedown: "/keypress/volumedown",
+                    volumeup: "/keypress/volumeup",
+                    volumemute: "/keypress/volumemute",
+                    play: "/keypress/play",
+                    rev: "/keypress/rev",
+                    fwd: "/keypress/fwd",
+                    instantreplay: "/keypress/instantreplay",
+                    search: "/keypress/search",
+                    enter: "/keypress/enter",
+                    backspace: "/keypress/backspace",
+                }
+
+                constructor () {
+                    let savedipaddress = (localStorage.getItem("RokuIpAddress") ? localStorage.getItem("RokuIpAddress") : "");
+                    this.ipaddress = savedipaddress;
+                    RokuIpAddress.value = this.ipaddress;
+                }
+
+                sendMessage (command) {
+
+                    let host = "http://" + String(this.ipaddress); 
+                    let url = host + command;
+
+                    let body = "POST " + command + " HTTP/1.1\r\n"
+                        + "Host: " + host + "\r\n"
+                        + "\r\n";
+
+                    let req = new XMLHttpRequest();
+
+                    req.onreadystatechange = function() {
+                        /*
+                        console.log(
+                            (readyState !== undefined ? readyState : ""), 
+                            (status !== undefined ? status : ""), 
+                            (responseText !== undefined ? responseText : "")
+                        );
+                        */
+
+                        // console.log(arguments);
+                    }
+
+                    req.open("POST", url, true);
+                    req.setRequestHeader("Content-Type", "text/plain");
+                    req.send(body);
+
+                    /* FIX: lots of CORS errors */
+
+                }
+
+                saveConfiguration () {
+                    this.ipaddress = RokuIpAddress.value;
+                    localStorage.setItem("RokuIpAddress", this.ipaddress);
+                }
+
+            }
+
+            const roku = new RokuController();
+
+        </script>
+
+    </body>
+</html>
