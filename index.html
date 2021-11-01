@@ -211,6 +211,7 @@
             class RokuController {
 
                 static Command = {
+                    // commands (POST)
                     home: "/keypress/home",
                     up: "/keypress/up",
                     down: "/keypress/down",
@@ -230,12 +231,23 @@
                     search: "/keypress/search",
                     enter: "/keypress/enter",
                     backspace: "/keypress/backspace",
+
+                    // queries (GET)
+                    deviceinfo: "/query/device-info",
+                    mediaplayer: "/query/media-player"
                 }
 
                 constructor () {
                     let savedipaddress = (localStorage.getItem("RokuIpAddress") ? localStorage.getItem("RokuIpAddress") : "");
                     this.ipaddress = savedipaddress;
+
                     RokuIpAddress.value = this.ipaddress;
+
+                    // rejected by CORS re: null origin...
+                    // if (this.ipaddress !== "") {
+                    //     this.deviceinfo = this.sendQuery(RokuController.Command.deviceinfo);
+                    //     this.mediaplayer = this.sendQuery(RokuController.Command.mediaplayer);
+                    // }
                 }
 
                 sendMessage (command) {
@@ -249,24 +261,49 @@
 
                     let req = new XMLHttpRequest();
 
-                    req.onreadystatechange = function() {
-                        /*
-                        console.log(
-                            (readyState !== undefined ? readyState : ""), 
-                            (status !== undefined ? status : ""), 
-                            (responseText !== undefined ? responseText : "")
-                        );
-                        */
-
-                        // console.log(arguments);
-                    }
-
                     req.open("POST", url, true);
                     req.setRequestHeader("Content-Type", "text/plain");
                     req.send(body);
 
                     /* FIX: lots of CORS errors */
 
+                }
+
+                sendQuery (command) {
+                    let host = "http://" + String(this.ipaddress); 
+                    let url = host + command;
+
+                    var self = this;
+
+                    let req = new XMLHttpRequest();
+
+                    req.onloadend = function(e) {
+                        console.log(e);
+                    };
+
+                    req.open("GET", url);
+                    req.send();
+
+                    // return fetch(url)
+                    //     .then(function(response) { return response.text(); })
+                    //     .then(function(data) { 
+                    //         console.log(data); 
+
+                    //         switch (command) {
+                    //             case RokuController.Command.deviceinfo:
+                    //                 console.log("deviceinfo");
+                    //                 // this.deviceinfo = "";
+                    //                 break;
+
+                    //             case RokuController.Command.mediaplayer:
+                    //                 console.log("mediaplayer");
+                    //                 // this.mediaplayer = "";
+                    //                 break;
+
+                    //             default:
+                    //                 break;
+                    //         }
+                    // });
                 }
 
                 saveConfiguration () {
